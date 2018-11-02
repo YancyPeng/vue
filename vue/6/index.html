@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>6.条件渲染</title>
+	<script src="../static/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- <p v-if="isOk">
+			{{msg}}
+		</p>
+		<p v-else>
+			No Message!
+		</p> -->
+		<!-- <template v-if="isOk">
+			<p v-if="score>=90">优秀</p>
+			<p v-else-if="score>=80">良好</p>
+			<p v-else-if="score>=70">良</p>
+			<p v-else-if="score>=60">及格</p>
+			<p v-else>不及格</p>
+		</template> -->
+		<template v-if="loginType == 'username'">
+			<label>Username</label>
+			<input type = "text" placeholder="please input your username.">
+		</template>
+		<template v-else>
+			<label>Email</label>
+			<input type = "text" placeholder="please input your email.">
+		</template>
+		<p>
+			<button @click="changeType()">Toggle login type</button>
+		</p>
+	</div>
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data:{
+				msg: '你好！',
+				isOk: true,
+				score: 95,
+				loginType : 'username',
+				loginTable:['username','email']
+			},
+			methods:{
+				changeType(){
+					let type = this.loginType;
+					if(this.loginTable[0] == type){
+						this.loginType = this.loginTable[1];
+					}else{
+						this.loginType = this.loginTable[0];
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>

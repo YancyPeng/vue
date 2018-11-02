@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../static/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for="(item, index) in items">
+				{{parentMessage}}--------{{index}}-------{{item.value}}
+			</li>
+		</ul>
+		<ol>
+			<li v-for = "(value, key, index) in object">
+				{{index}} : {{key}} : {{value}}
+			</li>
+		</ol>
+		<ul>
+			<li v-for = "n in evennumbers">
+				{{n}}
+			</li>
+		</ul>
+		
+	</div>
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data:{
+				parentMessage: 'parent',
+				numbers:[1,2,3,4,5],
+				items:[
+					{value: 'hello'},
+					{value: 'world'}
+				],
+				object:{
+					firstName: 'Kobe',
+					lastName: 'Bryant',
+					age: '39'
+				}
+			},
+			computed:{
+				evennumbers(){
+					return this.numbers.filter(function(number){
+						return number%2 == 0;
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

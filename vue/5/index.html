@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../static/vue.js"></script>
+	<style type="text/css">
+		.bd{font-weight: bold;}
+		.text-red{color: #F00;}
+		.bg-green{background-color: #0F0;}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<p :class="classObject">
+			{{msg}}
+		</p>
+		<p :style="styObj">
+			{{msg}}
+		</p>
+	</div>
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data:{
+				msg: '你好!',
+				classObject:{
+					bd:true,
+					'text-red': true
+				},
+				classStyle:{
+					color: 'red',
+					fontSize: '30px'
+				},
+				styObj:{
+					color: '#F00',
+					fontSize: '30px'
+				}
+			}
+		});
+	</script>
+</body>
+</html>

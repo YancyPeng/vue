@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="../static/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+	<title>4.计算属性和观察者</title>
+</head>
+<body>
+	<div id="app">
+		<p>
+			{{msg}}
+		</p>
+		<p>
+			{{reverseMsg}}
+		</p>
+		<p>
+			{{xing}} <br>
+			{{ming}} <br>
+			{{xingming}} <br>
+		</p>
+		<p>
+			输入一个回答 是/否 的问题：
+			<input type="text" v-model="question"><br>
+			{{answer}}
+		</p>
+	</div>
+	<script>
+		var app = new Vue({
+			el:'#app',
+			data:{
+				msg: 'nihao',
+				xing: 'Peng',
+				ming: 'Yancy',
+				question:'',
+				answer:''
+			},
+			methods:{
+				getNow(){
+					return Date.now();
+				},
+				getAnswer:_.debounce(
+					function(){
+						  if (this.question.indexOf('?') === -1) {
+					        this.answer = '请输入？'
+					        return
+					      }
+					      this.answer = '思考中...'
+					      var vm = this
+					      axios.get('https://yesno.wtf/api')
+					        .then(function (response) {
+					          vm.answer = response.data.answer =='yes'? '是' : '否'
+					        })
+					        .catch(function (error) {
+					          vm.answer = 'Error! Could not reach the API. ' + error
+					        })
+					}, 500
+				)
+			},
+			watch:{ // 监听属性值
+				question(){  
+					this.answer="等待输入完成。。。。。";
+					this.getAnswer();
+				}
+			},
+			computed:{
+				reverseMsg(){
+					return this.msg.split('').reverse().join('');
+				},
+				now(){
+					return Date.now();
+				},
+				xingming:{
+					get(){
+						return this.xing + this.ming;
+					},
+					set(name){
+						var xing = name.substr(0,1);
+						var ming = name.substr(1);
+						this.xing = xing;
+						this.ming = ming;
+					}
+				},
+			}
+		});
+	</script>
+</body>
+</html>
